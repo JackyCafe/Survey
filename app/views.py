@@ -28,6 +28,7 @@ def user_login(request):
         if form.is_valid():
             cd = form.cleaned_data
             user = get_object_or_404(User, username=cd['username'])
+            print(user)
             if user.check_password(cd['password']):
                 login(request, user)
                 return redirect('app:index')
@@ -81,7 +82,6 @@ def inhabitants(request):
     #
     user = request.user  # 問卷填表人
     applyer = UserProfile.objects.get(user=user)
-    print(applyer.cared_person)
     inhabitant: Inhabitants
     inhabitants_form: InhabitantsForm
     profile_form: UserProfileForm
@@ -111,6 +111,8 @@ def survey(request):
     survey_user: Survey
     user_id = request.user  # user object
     userprofile = UserProfile.objects.get(user=user_id)
+    print(userprofile)
+
     is_biginer = False
     if userprofile.care_time == '1':
         is_biginer = True  # 沒經驗的
@@ -139,24 +141,24 @@ def ladar(request):
     s = Survey.objects.filter(user=user_id).last()
     print(s)
     if userprofile.care_time == '1':
-        q1 = s.q1
-        q2 = s.q2
-        q3 = s.q3
-        q6 = s.q6
-        q7 = s.q7
-        q8 = s.q8
-        q11 = s.q11
-        q12 = s.q12
-        q13 = s.q13
-        q16 = s.q16
-        q17 = s.q17
-        q18 = s.q18
-        q21 = s.q21
-        q22 = s.q22
-        q23 = s.q23
-        q26 = s.q26
-        q27 = s.q27
-        q28 = s.q28
+        q1 = int(s.q1)
+        q2 = int(s.q2)
+        q3 = int(s.q3)
+        q6 = int(s.q6)
+        q7 = int(s.q7)
+        q8 = int(s.q8)
+        q11 = int(s.q11)
+        q12 = int(s.q12)
+        q13 = int(s.q13)
+        q16 = int(s.q16)
+        q17 = int(s.q17)
+        q18 = int(s.q18)
+        q21 = int(s.q21)
+        q22 = int(s.q22)
+        q23 = int(s.q23)
+        q26 = int(s.q26)
+        q27 = int(s.q27)
+        q28 = int(s.q28)
         v1 = (q1 + q2 + q3) / 15 * 5
         v2 = (q6 + q7 + q8) / 15 * 5
         v3 = (q11 + q12 + q13) / 15 * 5
@@ -168,6 +170,7 @@ def ladar(request):
 
     labels = np.array([u"醫療 ", u" 生活 ", u" 財務 ", u" 法律 ", u" 心理 ", u" 家庭 "])
     stats = [v1, v2, v3, v4, v5, v6]
+    print(stats)
 
     angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
     stats = np.concatenate((stats, [stats[0]]))

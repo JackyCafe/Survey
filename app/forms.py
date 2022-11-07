@@ -105,4 +105,5 @@ class SurveyForm(forms.ModelForm):
 
     class Meta:
         model = Survey
-        fields = [field.name for field in Survey._meta.fields]
+        fields = [field.name for field in Survey._meta.fields ]
+        exclude = ['user',]
