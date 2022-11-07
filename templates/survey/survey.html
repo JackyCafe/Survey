@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}問卷
+
+{% endblock %}
+{% block content %}
+    {{ userprofile.user }}
+    {{ userprofile.care_time }}
+    {% if is_biginer %}
+             <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+            {{ form.q1.label_tag }}<p></p>{{ form.q1 }}<p></p>
+            {{ form.q2.label_tag }}<p></p>{{ form.q2 }}<p></p>
+            {{ form.q3.label_tag }}<p></p>{{ form.q3 }}<p></p>
+            {{ form.q6.label_tag }}<p></p>{{ form.q6 }}<p></p>
+            {{ form.q7.label_tag }}<p></p>{{ form.q7 }}<p></p>
+            {{ form.q8.label_tag }}<p></p>{{ form.q8 }}<p></p>
+            {{ form.q11.label_tag }}<p></p>{{ form.q11 }}<p></p>
+            {{ form.q12.label_tag }}<p></p>{{ form.q12 }}<p></p>
+            {{ form.q13.label_tag }}<p></p>{{ form.q13 }}<p></p>
+            {{ form.q16.label_tag }}<p></p>{{ form.q16 }}<p></p>
+            {{ form.q17.label_tag }}<p></p>{{ form.q17 }}<p></p>
+            {{ form.q18.label_tag }}<p></p>{{ form.q18 }}<p></p>
+             {{ form.q21.label_tag }}<p></p>{{ form.q21 }}<p></p>
+            {{ form.q22.label_tag }}<p></p>{{ form.q22 }}<p></p>
+            {{ form.q23.label_tag }}<p></p>{{ form.q23 }}<p></p>
+            {{ form.q26.label_tag }}<p></p>{{ form.q26 }}<p></p>
+            {{ form.q27.label_tag }}<p></p>{{ form.q27 }}<p></p>
+            {{ form.q28.label_tag }}<p></p>{{ form.q28 }}<p></p>
+
+            <input type="submit" value="雷達圖分析">
+            </form>
+    {% else %}
+         <!--有經驗的-->
+          <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="雷達圖分析">
+            </form>
+    {% endif %}
+
+{% endblock %}

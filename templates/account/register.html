@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}create account{% endblock %}
+{% block content %}
+ <form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+    {{ user_form.as_p }}
+     {{ profile.role.label }}
+     {{ profile.role }}
+     <p></p>
+     {{ profile.care_time.label }}
+     {{ profile.care_time }}
+
+     <p></p>
+     {{ profile.cared_person.label }} <p></p>
+     {{ profile.cared_person }}
+
+     <p></p>
+     {{ profile.birth.label }} <p></p>
+     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">    {{ profile.birth }}
+      <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+      </div>
+</div>
+
+
+
+ <input type="submit" value="建立帳號">
+ </form>
+{% endblock %}
+Footer

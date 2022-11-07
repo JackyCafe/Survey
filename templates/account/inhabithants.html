@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}
+    住民資料填寫
+{% endblock %}
+{% block content %}
+    {{ applyer.cared_person}}
+    <form method="post" >
+    {% csrf_token %}
+          {{ user.userprofile.cared_person }}<p></p>
+          {{ inhabitants_form.birth.label_tag }}
+          {{ inhabitants_form.birth }}
+          {{ inhabitants_form.city.label_tag }}<p></p>
+          {{ inhabitants_form.city }}<p></p>
+          {{ inhabitants_form.resident }}<p></p>
+          {{ inhabitants_form.disease.label_tag  }}<p></p>
+          {{ inhabitants_form.disease }}
+          {{ inhabitants_form.mobility.label_tag  }}<p></p>
+          {{ inhabitants_form.mobility }}
+          {{ inhabitants_form.difficulty_care.label_tag }}<p></p>
+          {{ inhabitants_form.difficulty_care }}<p></p>
+          {{ inhabitants_form.life_difficulty.label_tag }}<p></p>
+          {{ inhabitants_form.life_difficulty }}<p></p>
+          {{ inhabitants_form.cohabitant.label_tag }}<p></p>
+          {{ inhabitants_form.cohabitant }}<p></p>
+         {{ inhabitants_form.resource.label_tag }}<p></p>
+         {{ inhabitants_form.resource }}<p></p>
+        {{ inhabitants_form.exception.label_tag }}<p></p>
+         {{ inhabitants_form.exception }}<p></p>
+           {{ inhabitants_form.budget.label_tag }}<p></p>
+         {{ inhabitants_form.budget }}<p></p>
+
+      <input type="submit" >
+    </form>
+
+
+
+{% endblock %}

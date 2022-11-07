@@ -1,0 +1,13 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+{% block content %}
+{{ user }}，您的分析如下<p></p>
+    {{ survey }}
+    <img src='{%  static "img/ladar.jpg"%}'>
+
+{% endblock %}
