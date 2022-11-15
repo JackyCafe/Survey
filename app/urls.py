@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 
-from app.views import index, register,ladar,survey,user_login,inhabitants
+from app.views import index, register,ladar,ExperienceSurvey,user_login,inhabitants,survey,NoExperienceSurvey
 
 app_name = 'app'
 urlpatterns = [
@@ -28,5 +28,7 @@ urlpatterns = [
     path('inhabitants/',inhabitants,name='inhabitant'),
     path('ladar/',ladar,name='ladar'),
     path('survey/',survey,name='survey'),
+    path('experience_survey/',ExperienceSurvey,name='experiencesurvey'), #有照護經建的問卷
+    path('no_experience_survey/',NoExperienceSurvey,name='no_experience_survey'),# 沒照護經驗的問卷
     path('register/', register, name='register'),
 ]

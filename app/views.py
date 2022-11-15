@@ -6,7 +6,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
-from app.forms import UserRegisterForm, UserProfileForm, SurveyForm, LoginForm, InhabitantsForm
+from app.forms import UserRegisterForm, UserProfileForm, ExperienceSurveyForm, LoginForm, InhabitantsForm, \
+    NoExperienceSurveyForm
 from app.models import UserProfile, Survey, Inhabitants
 import numpy as np
 from matplotlib import pyplot as plt
@@ -92,7 +93,7 @@ def inhabitants(request):
             inhabitant = inhabitants_form.save(commit=False)
             inhabitant.user = user
             inhabitant.save()
-            return redirect('app:index')
+            return redirect('app:survey')
     else:
         inhabitants_form = InhabitantsForm()
 
@@ -104,10 +105,19 @@ def inhabitants(request):
                       , 'applyer': applyer})
 
 
-'''填寫問卷'''
-
-
 def survey(request):
+    user = request.user #
+    userprofile = UserProfile.objects.get(user=user)
+    if userprofile.care_time=='1':
+      return  redirect('app:no_experience_survey')
+    else:
+      return   redirect('app:experiencesurvey')
+
+
+'''填寫有經驗的問卷'''
+
+
+def ExperienceSurvey(request):
     survey_user: Survey
     user_id = request.user  # user object
     userprofile = UserProfile.objects.get(user=user_id)
@@ -116,8 +126,9 @@ def survey(request):
     is_biginer = False
     if userprofile.care_time == '1':
         is_biginer = True  # 沒經驗的
+
     if request.method == 'POST':
-        form = SurveyForm(request.POST)
+        form = ExperienceSurveyForm(request.POST)
         print(form.is_valid())
         if form.is_valid():
             survey_user = form.save(commit=False)
@@ -125,10 +136,33 @@ def survey(request):
             survey_user.save()
             return redirect('app:ladar')
     else:
-        form = SurveyForm()
+
+        form = ExperienceSurveyForm()
+
+
     return render(request, 'survey/survey.html',
                   {'form': form, 'userprofile': userprofile, 'is_biginer': is_biginer})
 
+
+
+def NoExperienceSurvey(request):
+    survey_user: Survey # survey model 的物件
+    user_id = request.user  # user object
+    userprofile = UserProfile.objects.get(user=user_id)
+    if request.method == 'POST':
+        form = NoExperienceSurveyForm(request.POST)
+        print(form.is_valid())
+        if form.is_valid():
+            survey_user = form.save(commit=False)
+            survey_user.user = userprofile.user
+            survey_user.save()
+            return redirect('app:ladar')
+    else:
+
+        form = NoExperienceSurveyForm()
+    print('here')
+    return render(request, 'survey/survey.html',
+                  {'form': form, 'userprofile': userprofile})
 
 '''雷達'''
 
@@ -139,26 +173,37 @@ def ladar(request):
     user_id = request.user
     userprofile = UserProfile.objects.get(user_id=user_id)
     s = Survey.objects.filter(user=user_id).last()
-    print(s)
+    q1 = int(s.q1)
+    q2 = int(s.q2)
+    q3 = int(s.q3)
+    q4 = int(s.q4)
+    q5 = int(s.q5)
+    q6 = int(s.q6)
+    q7 = int(s.q7)
+    q8 = int(s.q8)
+    q9 = int(s.q9)
+    q10 = int(s.q10)
+    q11 = int(s.q11)
+    q12 = int(s.q12)
+    q13 = int(s.q13)
+    q14 = int(s.q14)
+    q15 = int(s.q15)
+    q16 = int(s.q16)
+    q17 = int(s.q17)
+    q18 = int(s.q18)
+    q19 = int(s.q19)
+    q20 = int(s.q20)
+    q21 = int(s.q21)
+    q22 = int(s.q22)
+    q23 = int(s.q23)
+    q24 = int(s.q24)
+    q25 = int(s.q25)
+    q26 = int(s.q26)
+    q27 = int(s.q27)
+    q28 = int(s.q28)
+    q29 = int(s.q29)
+    q30 = int(s.q15)
     if userprofile.care_time == '1':
-        q1 = int(s.q1)
-        q2 = int(s.q2)
-        q3 = int(s.q3)
-        q6 = int(s.q6)
-        q7 = int(s.q7)
-        q8 = int(s.q8)
-        q11 = int(s.q11)
-        q12 = int(s.q12)
-        q13 = int(s.q13)
-        q16 = int(s.q16)
-        q17 = int(s.q17)
-        q18 = int(s.q18)
-        q21 = int(s.q21)
-        q22 = int(s.q22)
-        q23 = int(s.q23)
-        q26 = int(s.q26)
-        q27 = int(s.q27)
-        q28 = int(s.q28)
         v1 = (q1 + q2 + q3) / 15 * 5
         v2 = (q6 + q7 + q8) / 15 * 5
         v3 = (q11 + q12 + q13) / 15 * 5
@@ -166,11 +211,16 @@ def ladar(request):
         v5 = (q21 + q22 + q23) / 15 * 5
         v6 = (q26 + q27 + q28) / 15 * 5
     else:
-        pass
+        v1 = (q1 + q2 + q3+q4+q5) / 15 * 5
+        v2 = (q6 + q7 + q8+q9+q10) / 15 * 5
+        v3 = (q11 + q12 + q13+q14+q15) / 15 * 5
+        v4 = (q16 + q17 + q18+q19+q20) / 15 * 5
+        v5 = (q21 + q22 + q23+q24+q25) / 15 * 5
+        v6 = (q26 + q27 + q28+q29+q30) / 15 * 5
 
     labels = np.array([u"醫療 ", u" 生活 ", u" 財務 ", u" 法律 ", u" 心理 ", u" 家庭 "])
     stats = [v1, v2, v3, v4, v5, v6]
-    print(stats)
+    # print(stats)
 
     angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
     stats = np.concatenate((stats, [stats[0]]))

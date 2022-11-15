@@ -6,10 +6,13 @@
    <p> user: {{ userprofile.user }}
     <p>照護經驗  {{ userprofile.care_time }}
 
-         <!--有經驗的-->
-          <form method="post" enctype="multipart/form-data">
+         <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
+   <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                     <h2 class="accordion-header" id="headingOne">
             {{ form.as_p }}
+                     </h2></div></div>
             <input type="submit" value="雷達圖分析">
             </form>
 
